@@ -14,5 +14,6 @@
   </Dependencies>
   <Assets>
     <Asset Type="UnitTestExtension" d:Source="Project" d:ProjectName="iutest_adapter" Path="|iutest_adapter|" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="iutest_adapter" Path="|iutest_adapter|" />
   </Assets>
 </PackageManifest>
