@@ -7,22 +7,54 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iutest_adapter_vsix", "iute
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iutest_adapter", "iutest_adapter\iutest_adapter.csproj", "{F3E9CE8F-50F4-43A0-A0C2-54D76C704694}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualStudioAdapter", "vs-boost-unit-test-adapter\VisualStudioAdapter\VisualStudioAdapter.csproj", "{62347CC7-C839-413D-A7CE-598409F6F15B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Boost.Test", "Boost.Test", "{E4D78A0D-EBD5-440D-9DA6-FF8E7E5407CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualStudio2015Adapter", "vs-boost-unit-test-adapter\VisualStudio2015Adapter\VisualStudio2015Adapter.csproj", "{EB0051E3-1DDA-418C-ABAF-C1DA5339114C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualStudio2013Adapter", "vs-boost-unit-test-adapter\VisualStudio2013Adapter\VisualStudio2013Adapter.csproj", "{82DF0AEB-582A-4B38-96FC-AAEE773BEAFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualStudio2012Adapter", "vs-boost-unit-test-adapter\VisualStudio2012Adapter\VisualStudio2012Adapter.csproj", "{30ECC867-CE89-425F-B452-7A8A320F727D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F3E9CE8F-50F4-43A0-A0C2-54D76C704694}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3E9CE8F-50F4-43A0-A0C2-54D76C704694}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3E9CE8F-50F4-43A0-A0C2-54D76C704694}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3E9CE8F-50F4-43A0-A0C2-54D76C704694}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FEEA5A12-FD99-4871-8A7F-750A9EBCC292}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FEEA5A12-FD99-4871-8A7F-750A9EBCC292}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEEA5A12-FD99-4871-8A7F-750A9EBCC292}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEEA5A12-FD99-4871-8A7F-750A9EBCC292}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E9CE8F-50F4-43A0-A0C2-54D76C704694}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E9CE8F-50F4-43A0-A0C2-54D76C704694}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E9CE8F-50F4-43A0-A0C2-54D76C704694}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E9CE8F-50F4-43A0-A0C2-54D76C704694}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62347CC7-C839-413D-A7CE-598409F6F15B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62347CC7-C839-413D-A7CE-598409F6F15B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62347CC7-C839-413D-A7CE-598409F6F15B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62347CC7-C839-413D-A7CE-598409F6F15B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB0051E3-1DDA-418C-ABAF-C1DA5339114C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB0051E3-1DDA-418C-ABAF-C1DA5339114C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB0051E3-1DDA-418C-ABAF-C1DA5339114C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB0051E3-1DDA-418C-ABAF-C1DA5339114C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82DF0AEB-582A-4B38-96FC-AAEE773BEAFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82DF0AEB-582A-4B38-96FC-AAEE773BEAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82DF0AEB-582A-4B38-96FC-AAEE773BEAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82DF0AEB-582A-4B38-96FC-AAEE773BEAFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30ECC867-CE89-425F-B452-7A8A320F727D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30ECC867-CE89-425F-B452-7A8A320F727D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30ECC867-CE89-425F-B452-7A8A320F727D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30ECC867-CE89-425F-B452-7A8A320F727D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{62347CC7-C839-413D-A7CE-598409F6F15B} = {E4D78A0D-EBD5-440D-9DA6-FF8E7E5407CE}
+		{EB0051E3-1DDA-418C-ABAF-C1DA5339114C} = {E4D78A0D-EBD5-440D-9DA6-FF8E7E5407CE}
+		{82DF0AEB-582A-4B38-96FC-AAEE773BEAFE} = {E4D78A0D-EBD5-440D-9DA6-FF8E7E5407CE}
+		{30ECC867-CE89-425F-B452-7A8A320F727D} = {E4D78A0D-EBD5-440D-9DA6-FF8E7E5407CE}
 	EndGlobalSection
 EndGlobal

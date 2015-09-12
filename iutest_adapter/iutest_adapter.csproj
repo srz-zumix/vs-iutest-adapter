@@ -30,12 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="envdte80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.Core">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.Core.dll</HintPath>
     </Reference>
@@ -51,6 +58,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,7 +75,29 @@
     <Compile Include="iutestTestExecutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\Logger.cs" />
+    <Compile Include="Utility\NativeMethods.cs" />
+    <Compile Include="Utility\ROTException.cs" />
+    <Compile Include="Utility\VisualStudio\DefaultVisualStudioInstanceProvider.cs" />
+    <Compile Include="Utility\VisualStudio\IVisualStudioInstanceProvider.cs" />
     <Compile Include="Utility\VisualStudio\SolutionHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\vs-boost-unit-test-adapter\VisualStudio2012Adapter\VisualStudio2012Adapter.csproj">
+      <Project>{30ecc867-ce89-425f-b452-7a8a320f727d}</Project>
+      <Name>VisualStudio2012Adapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\vs-boost-unit-test-adapter\VisualStudio2013Adapter\VisualStudio2013Adapter.csproj">
+      <Project>{82df0aeb-582a-4b38-96fc-aaee773beafe}</Project>
+      <Name>VisualStudio2013Adapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\vs-boost-unit-test-adapter\VisualStudio2015Adapter\VisualStudio2015Adapter.csproj">
+      <Project>{eb0051e3-1dda-418c-abaf-c1da5339114c}</Project>
+      <Name>VisualStudio2015Adapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\vs-boost-unit-test-adapter\VisualStudioAdapter\VisualStudioAdapter.csproj">
+      <Project>{62347cc7-c839-413d-a7ce-598409f6f15b}</Project>
+      <Name>VisualStudioAdapter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 
@@ -17,6 +19,7 @@ namespace iutest_adapter
 
         public event EventHandler TestContainersUpdated;
 
+        private IServiceProvider serviceProvider;
         private bool initialContainerSearch;
         private readonly List<ITestContainer> cachedContainers;
 
@@ -25,13 +28,9 @@ namespace iutest_adapter
 
         private IEnumerable<ITestContainer> GetTestContainers()
         {
-            if (initialContainerSearch)
-            {
-                cachedContainers.Clear();
-                initialContainerSearch = false;
-            }
-
-            return cachedContainers;
+            return new[] {
+                new iutestTestContainer(this, "", ExecutorUri)
+                };
         }
     }
 }

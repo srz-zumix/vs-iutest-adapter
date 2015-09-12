@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,18 @@ namespace iutest_adapter
 {
     public class iutestExeTestDiscoverer : IIutestTestDiscoverer
     {
+        public iutestExeTestDiscoverer()
+            : this(new DefaultVisualStudioInstanceProvider())
+        {
+        }
+
+        public iutestExeTestDiscoverer(IVisualStudioInstanceProvider provider)
+        {
+            this.VSProvider = provider;
+        }
+
+        public IVisualStudioInstanceProvider VSProvider { get; private set; }
+
         public void DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext
             , IMessageLogger logger, ITestCaseDiscoverySink discoverySink)
         {
@@ -26,17 +39,14 @@ namespace iutest_adapter
 
         private IEnumerable<string> FindCppFiles()
         {
-            var dte = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE));
+            var projects = VSProvider.Instance.Solution.Projects;
 
-            var solution = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(IVsSolution));
-            var loadedProjects = SolutionHelper.EnumerateLoadedProjects((IVsSolution)solution, __VSENUMPROJFLAGS.EPF_LOADEDINSOLUTION).OfType<IVsProject>();
-
-            return loadedProjects.SelectMany(FindCppFiles).ToList();
+            return projects.SelectMany(FindCppFiles).ToList();
         }
 
-        private IEnumerable<string> FindCppFiles(IVsProject project)
+        private IEnumerable<string> FindCppFiles(VisualStudioAdapter.IProject project)
         {
-            return from item in SolutionHelper.GetProjectItems(project)
+            return from item in project.SourceFiles
                    where IsTestFile(item)
                    select item;
         }
