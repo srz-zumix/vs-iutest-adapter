@@ -10,14 +10,22 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using iutest_adapter.Utility;
 using iutest_adapter.Utility.VisualStudio;
+using VisualStudioAdapter;
+using BoostTestAdapter.SourceFilter;
+
+using VSTestCase = Microsoft.VisualStudio.TestPlatform.ObjectModel.TestCase;
 
 namespace iutest_adapter
 {
     public class iutestExeTestDiscoverer : IIutestTestDiscoverer
     {
+        private readonly ISourceFilter[] _sourceFilters;
+
+
         public iutestExeTestDiscoverer()
             : this(new DefaultVisualStudioInstanceProvider())
         {
+            _sourceFilters = SourceFilterFactory.Get();
         }
 
         public iutestExeTestDiscoverer(IVisualStudioInstanceProvider provider)
@@ -30,44 +38,84 @@ namespace iutest_adapter
         public void DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext
             , IMessageLogger logger, ITestCaseDiscoverySink discoverySink)
         {
-            var cppFiles = FindCppFiles();
-            foreach( var f in cppFiles )
-            {
-                Logger.Info(f);
-            }
+            IList<ProjectInfo> projects = FindProjectInfo(sources);
         }
 
-        private IEnumerable<string> FindCppFiles()
+        private IList<ProjectInfo> FindProjectInfo(IEnumerable<string> sources)
         {
+            IList<ProjectInfo> infos = new List<ProjectInfo>();
             var projects = VSProvider.Instance.Solution.Projects;
+            List<string> sourcesCopy = sources.ToList();
 
-            return projects.SelectMany(FindCppFiles).ToList();
-        }
-
-        private IEnumerable<string> FindCppFiles(VisualStudioAdapter.IProject project)
-        {
-            return from item in project.SourceFiles
-                   where IsTestFile(item)
-                   select item;
-        }
-        private static bool IsCppFile(string path)
-        {
-            return ".cpp".Equals(Path.GetExtension(path), StringComparison.OrdinalIgnoreCase)
-                || ".cxx".Equals(Path.GetExtension(path), StringComparison.OrdinalIgnoreCase);
-        }
-
-        private bool IsTestFile(string path)
-        {
-            try
+            foreach (var project in projects)
             {
-                return IsCppFile(path);
-            }
-            catch (IOException e)
-            {
-                Logger.Error("IO error when detecting a test file during Test Container Discovery" + e.Message);
-            }
+                IProjectConfiguration configuration = project.ActiveConfiguration;
 
-            return false;
+                int index = sourcesCopy.FindIndex(source => string.Equals(source, configuration.PrimaryOutput, StringComparison.OrdinalIgnoreCase));
+                if (index >= 0)
+                {
+                    ProjectInfo info = new ProjectInfo(sourcesCopy[index]);
+                    sourcesCopy.RemoveAt(index);
+
+                    info.DefinesHandler = configuration.CppCompilerOptions.PreprocessorDefinitions;
+                    foreach (string s in project.SourceFiles)
+                    {
+                        info.CppSourceFiles.Add(s);
+                    }
+
+                    infos.Add(info);
+                }
+            }
+            return infos;
+        }
+
+        private void GetIutest(IList<ProjectInfo> projects, ITestCaseDiscoverySink discoverySink)
+        {
+            if (projects == null) return;
+
+            foreach( ProjectInfo project in projects )
+            {
+                foreach( string sourceFile in project.CppSourceFiles )
+                {
+                    try
+                    {
+                        using (var reader = new StreamReader(sourceFile))
+                        {
+                            try
+                            {
+                                CppSourceFile cppSourceFile = new CppSourceFile()
+                                {
+                                    FileName = sourceFile,
+                                    SourceCode = reader.ReadToEnd()
+                                };
+
+
+                                ApplySourceFilter(cppSourceFile, new Defines(project.DefinesHandler));
+
+
+                            }
+                            catch (Exception e)
+                            {
+                                Logger.Error("Exception: \"{0}\", {1}", sourceFile, e.Message);
+                                Logger.Error(e.StackTrace);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error("Exception: \"{0}\", {1}", sourceFile, e.Message);
+                        Logger.Error(e.StackTrace);
+                    }
+                }
+            }
+        }
+
+        private void ApplySourceFilter(CppSourceFile cppSourceFile, Defines definesHandler)
+        {
+            foreach( var filter in _sourceFilters )
+            {
+                filter.Filter(cppSourceFile, definesHandler);
+            }
         }
     }
 }

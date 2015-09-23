@@ -67,6 +67,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Boost\SourceFilter\CppSourceFile.cs" />
+    <Compile Include="Boost\SourceFilter\ISourceFilter.cs" />
+    <Compile Include="Boost\SourceFilter\MultilineCommentFilter.cs" />
+    <Compile Include="Boost\SourceFilter\QuotedStringsFilter.cs" />
+    <Compile Include="Boost\SourceFilter\SingleLineCommentFilter.cs" />
+    <Compile Include="Boost\SourceFilter\SourceFilterFactory.cs" />
     <Compile Include="IIutestTestDiscoverer.cs" />
     <Compile Include="iutestExeTestDiscoverer.cs" />
     <Compile Include="iutestTestDiscoverer.cs" />
@@ -79,6 +85,7 @@
     <Compile Include="Utility\ROTException.cs" />
     <Compile Include="Utility\VisualStudio\DefaultVisualStudioInstanceProvider.cs" />
     <Compile Include="Utility\VisualStudio\IVisualStudioInstanceProvider.cs" />
+    <Compile Include="Utility\VisualStudio\ProjectInfo.cs" />
     <Compile Include="Utility\VisualStudio\SolutionHelper.cs" />
   </ItemGroup>
   <ItemGroup>
